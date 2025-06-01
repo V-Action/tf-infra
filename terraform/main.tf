@@ -30,3 +30,10 @@ module "lambda" {
   trusted_name      = module.s3.trusted_name
   topic_arn         = module.sns.topic_arn
 }
+
+module "api_gateway" {
+  source = "./modules/api_gateway"
+
+  lambda_function_name = module.lambda.lambda_process_csv_function_name
+  lambda_function_arn  = module.lambda.lambda_process_csv_function_arn
+}
