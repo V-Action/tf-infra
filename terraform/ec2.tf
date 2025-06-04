@@ -61,6 +61,7 @@ resource "aws_ssm_parameter" "private_ip" {
   name  = "/config/backend_private_ip"
   type  = "String"
   value = aws_instance.ec2-private-vaction.private_ip
+  overwrite   = true
 }
 
 # ======================== Executando o Script de Configuração ========================

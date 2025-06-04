@@ -13,7 +13,7 @@ resource "aws_lambda_function" "etl" {
   runtime       = "python3.9"
   role          = "arn:aws:iam::359195580579:role/LabRole" #
   filename      = "${path.module}/lambda_etl_function/lambda.zip"
-  source_code_hash = filebase64sha256("${path.module}/lambda_function/lambda.zip")
+  source_code_hash = filebase64sha256("${path.module}/lambda_etl_function/lambda.zip")
   timeout       = 90
 
   # camada do pandas
@@ -37,7 +37,7 @@ resource "aws_lambda_function" "process_csv" {
   runtime       = "python3.9"
   role          = "arn:aws:iam::359195580579:role/LabRole" #
   filename      = "${path.module}/lambda_process_csv_function/lambda.zip"
-  source_code_hash = filebase64sha256("${path.module}/lambda_function/lambda.zip")
+  source_code_hash = filebase64sha256("${path.module}/lambda_process_csv_function/lambda.zip")
   timeout       = 90
 
   # camada do pandas
