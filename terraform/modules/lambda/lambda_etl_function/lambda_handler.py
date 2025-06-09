@@ -64,7 +64,7 @@ def lambda_handler(event, context):
         df_transform['Email do solicitante'] = df_transform['Email do solicitante'].str.lower()
         df_transform['Categoria'] = df_transform['Categoria'].str.strip().str.capitalize()
 
-        campos_obrigatorios = ['Categoria', 'Email do solicitante', 'Nome do solicitante', 'Título']
+        campos_obrigatorios = ['Categoria', 'Email do solicitante', 'Nome do solicitante', 'Titulo']
         df_transform = df_transform.dropna(subset=campos_obrigatorios)
         for campo in campos_obrigatorios:
             df_transform = df_transform[df_transform[campo].astype(str).str.strip() != '']

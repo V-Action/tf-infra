@@ -56,7 +56,7 @@ def lambda_handler(event, context):
             "Email do solicitante": fields.get("Email do solicitante"),
             "Categoria": fields.get("Categoria"),
             "Titulo": fields.get("Título"),
-            "Descrição": fields.get("Descrição")
+            "Descricao": fields.get("Descricao")
         }
         data.append(row)
     df = pd.DataFrame(data)
