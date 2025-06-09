@@ -11,7 +11,7 @@ resource "aws_lambda_function" "etl" {
   function_name = local.lambda_etl_function_name
   handler       = "lambda_handler.lambda_handler"
   runtime       = "python3.9"
-  role          = "arn:aws:iam::359195580579:role/LabRole" #
+  role          = "arn:aws:iam::352018330377:role/LabRole" #
   filename      = "${path.module}/lambda_etl_function/lambda.zip"
   source_code_hash = filebase64sha256("${path.module}/lambda_etl_function/lambda.zip")
   timeout       = 90
@@ -35,7 +35,7 @@ resource "aws_lambda_function" "process_csv" {
   function_name = local.lambda_process_csv_function_name
   handler       = "lambda_handler.lambda_handler"
   runtime       = "python3.9"
-  role          = "arn:aws:iam::359195580579:role/LabRole" #
+  role          = "arn:aws:iam::352018330377:role/LabRole" #
   filename      = "${path.module}/lambda_process_csv_function/lambda.zip"
   source_code_hash = filebase64sha256("${path.module}/lambda_process_csv_function/lambda.zip")
   timeout       = 90
