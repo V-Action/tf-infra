@@ -1,0 +1,44 @@
+# Diretórios locais do Terraform
+**/.terraform/
+terraform-provider-*
+
+# Arquivos de state
+*.tfstate
+*.tfstate.*
+
+# Lock info temporário
+.terraform.tfstate.lock.info
+
+# Logs de crash
+crash.log
+crash.*.log
+
+# Variáveis sensíveis
+*.tfvars
+*.tfvars.json
+
+# Overrides locais
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Config local da CLI
+.terraformrc
+terraform.rc
+
+# Chaves privadas e credenciais
+*.pem
+keys/
+
+# Arquivos de plano
+*.tfplan
+*.plan
+
+# Arquivos de backup e temporários
+*.bak
+*.tmp
+*.swp
+
+# Binários do provider (muito grandes)
+terraform-provider-*
