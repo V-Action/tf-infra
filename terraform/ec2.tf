@@ -6,16 +6,20 @@ resource "aws_instance" "ec2-public-vaction" {
   vpc_security_group_ids = [aws_security_group.sg-public-vaction.id]
   key_name = "key-ec2-public-vaction"
 
+  provisioner "file" {
+    source      = "./public.sh"
+    destination = "/home/ubuntu/public.sh"
+  }
 
   provisioner "file" {
-    source      = "./keys/key-ec2-private-vaction.pem"
+    source      = "../../key-ec2-private-vaction.pem"
     destination = "/home/ubuntu/.ssh/key-ec2-private-vaction.pem"
   }
 
   connection {
     type        = "ssh"
     user        = "ubuntu"  
-    private_key = file("./keys/key-ec2-public-vaction.pem")
+    private_key = file("../../key-ec2-public-vaction.pem")
     host        = self.public_ip
   }
 
@@ -34,16 +38,26 @@ resource "aws_instance" "ec2-private-vaction" {
 
   depends_on = [aws_instance.ec2-public-vaction, aws_route_table_association.assoc_private]
 
+  provisioner "file" {
+    source      = "./private.sh"
+    destination = "/home/ubuntu/private.sh"
+  }
+
+  provisioner "file" {
+    source      = "C:/Users/Gabriel/Desktop/faculdade/6-sem-pi/banco-de-dados"
+    destination = "/tmp/database"
+  }
+
 
   connection {
     type        = "ssh"
     user        = "ubuntu"
-    private_key = file("./keys/key-ec2-private-vaction.pem")
+    private_key = file("../../key-ec2-private-vaction.pem")
     host        = self.private_ip
 
     bastion_host        = aws_instance.ec2-public-vaction.public_ip
     bastion_user        = "ubuntu"
-    bastion_private_key = file("./keys/key-ec2-public-vaction.pem")
+    bastion_private_key = file("../../key-ec2-public-vaction.pem")
   }
 
   tags = {
