@@ -50,7 +50,8 @@ create_db_user() {
 setup_database() {
   DB_DIR="/tmp/database"
   echo "Executando scripts SQL para configurar o banco de dados..."
-  for script in criacao-tabelas.sql views-e-procedures.sql popular-dados.sql; do
+  
+  for script in criacao-tabelas.sql popular-dados.sql views-e-procedures.sql; do
     if [ -f "$DB_DIR/$script" ]; then
       echo "Executando $script..."
       sudo mysql < "$DB_DIR/$script"

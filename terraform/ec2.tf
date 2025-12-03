@@ -75,6 +75,46 @@ resource "aws_ssm_parameter" "private_ip" {
 }
 
 # ======================== Executando o Script de Configuração ========================
+resource "null_resource" "configurar_bd" {
+  depends_on = [aws_instance.ec2-public-vaction, aws_instance.ec2-private-vaction]
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo chmod +x /home/ubuntu/private.sh",
+      "sudo bash /home/ubuntu/private.sh"
+    ]
+  }
+
+  connection {
+    type        = "ssh"
+    user        = "ubuntu"
+    private_key = file("../../key-ec2-private-vaction.pem")
+    host        = aws_instance.ec2-private-vaction.private_ip
+
+    bastion_host        = aws_instance.ec2-public-vaction.public_ip
+    bastion_user        = "ubuntu"
+    bastion_private_key = file("../../key-ec2-public-vaction.pem")
+  }
+}
+
+resource "null_resource" "configurar_frontend" {
+  depends_on = [aws_instance.ec2-public-vaction, aws_instance.ec2-private-vaction, null_resource.configurar_bd]
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo chmod 400 ~/.ssh/key-ec2-private-vaction.pem",
+      "sudo chmod +x /home/ubuntu/public.sh",
+      "sudo bash /home/ubuntu/public.sh ${aws_instance.ec2-private-vaction.private_ip}"
+    ]
+  }
+
+  connection {
+    type        = "ssh"
+    host        = aws_instance.ec2-public-vaction.public_ip
+    user        = "ubuntu"
+    private_key = file("../../key-ec2-public-vaction.pem")
+  }
+}
 
 # ======================== Outputs (para visualizar os IPs) ========================
 output "nginx_public_ip" {
